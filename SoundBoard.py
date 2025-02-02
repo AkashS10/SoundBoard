@@ -13,6 +13,7 @@ for i in sd.query_devices():
 def play():
     data, fs = sf.read("sounds/"+sounds[currentSelected]+".mp3")
     sd.play(data, fs, device=device)
+    sd.play(data, fs)
 
 def left():
     global img, currentSelected
