@@ -10,10 +10,29 @@ for i in sd.query_devices():
         device = i["index"]
         break
 
-def onPress():
+def play():
     data, fs = sf.read("sounds/"+sounds[currentSelected]+".mp3")
     sd.play(data, fs, device=device)
-keyboard.add_hotkey("`", onPress)
+
+def left():
+    global img, currentSelected
+    currentSelected -= 1
+    if currentSelected < 0:
+        currentSelected = len(sounds) - 1
+    img = ImageTk.PhotoImage(Image.open("icons/"+sounds[currentSelected]+".png")) 
+    label.configure(image=img)
+
+def right():
+    global img, currentSelected
+    currentSelected += 1
+    if currentSelected == len(sounds):
+        currentSelected = 0
+    img = ImageTk.PhotoImage(Image.open("icons/"+sounds[currentSelected]+".png")) 
+    label.configure(image=img)
+
+keyboard.add_hotkey("`", play)
+keyboard.add_hotkey("left", left)
+keyboard.add_hotkey("right", right)
 
 sounds = []
 for file in os.listdir("sounds"):
